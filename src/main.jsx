@@ -1,10 +1,14 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import App from './App'
-import './index.css'
+import { JournalApp } from './JournalApp'
+//BrowserRouter debe ir al nivel mas alto
+import { BrowserRouter } from'react-router-dom';
+import './styles.css'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <App />
+    <BrowserRouter>
+		  <JournalApp />
+    </BrowserRouter>
   </React.StrictMode>
 )
