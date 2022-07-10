@@ -27,7 +27,11 @@ export const NavBar = ({drawerWidth}) => {
                 <Typography variant='h6' noWrap component='div'>
                     JournalApp
                 </Typography>
-                <LoginOutlined color='error' />
+                <IconButton
+                    sx={{':hover': { color: 'error.main', opacity: 0.7 }}}
+                >
+                    <LoginOutlined color='error' />
+                </IconButton>
             </Grid>
         </Toolbar>
     </AppBar>
