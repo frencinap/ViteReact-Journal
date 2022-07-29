@@ -1,14 +1,18 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import { JournalApp } from './JournalApp'
-//BrowserRouter debe ir al nivel mas alto
+import { Provider } from 'react-redux';
+//BrowserRouter debe ir al nivel mas alto(si no hay store, como ac{a hay store va abajo de provider})
 import { BrowserRouter } from'react-router-dom';
+import { JournalApp } from './JournalApp'
+import { store } from './store';
 import './styles.css'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <BrowserRouter>
-		  <JournalApp />
-    </BrowserRouter>
+    <Provider store={ store}>
+      <BrowserRouter>
+		    <JournalApp />
+      </BrowserRouter>
+    </Provider>
   </React.StrictMode>
 )
