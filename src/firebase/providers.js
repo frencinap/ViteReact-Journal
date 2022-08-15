@@ -1,4 +1,4 @@
-import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { FirebaseAuth } from "./config";
 
 // creamos la instancia para usar goggle sign in
@@ -31,6 +31,28 @@ export const signInwithGoogle = async() => {
             ok: false,
             errorCode,
             errorMessage
+        }
+    }
+}
+
+export const registerUserWithEmailAndPassword = async({ email, password, displayName }) => {
+    try {
+        const result = await createUserWithEmailAndPassword(FirebaseAuth, email, password)
+        const {uid, photoURL} = result.user
+        console.log(result);
+        //todo: actualizar displayName en firebase
+        return {
+            ok:true,
+            uid,
+            photoURL,
+            email,
+            displayName
+        }
+    } catch (error) {
+        console.log(error);
+        return { 
+            ok:false, 
+            errorMessage: error.message 
         }
     }
 }
