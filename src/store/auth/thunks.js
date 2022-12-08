@@ -23,7 +23,11 @@ export const startGoogleSignIn = () => {
 export const createUserWithEmailAndPassword = ({email, password, displayName}) => {
     return async( dispatch ) => {
         dispatch( checkingCredentials() )
-        const resp = await registerUserWithEmailAndPassword({ email, password, displayName})
-        console.log(resp);
+        const { ok, uid, photoURL, errorMessage } = await registerUserWithEmailAndPassword({ email, password, displayName})
+        //console.log(resp);
+        if (!ok) return dispatch(logout({errorMessage}))
+
+        //si todo sale bien logeamos
+        dispatch ( login( {uid, photoURL, displayName, email} ) )
     }
 }

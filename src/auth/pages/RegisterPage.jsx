@@ -1,8 +1,8 @@
 //para evitar conflicto entre el link de mui y el router, le damos un alias
 import { Link as RouterLink } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { useState } from "react";
-import { Grid, Typography, TextField, Button, Link } from '@mui/material'
+import { useDispatch, useSelector } from "react-redux";
+import { useState, useMemo } from "react";
+import { Grid, Typography, TextField, Button, Link, Alert } from '@mui/material'
 import { AuthLayout } from "../layout/AuthLayout";
 import { useForm } from "../../hooks";
 import { createUserWithEmailAndPassword } from "../../store/auth";
@@ -25,6 +25,9 @@ export const RegisterPage = () => {
 
   const dispatch =  useDispatch()
   const [formSubmitted, setFormSubmitted] = useState(false)
+
+  const { status, errorMessage } = useSelector( state => state.auth)
+  const isCheckingAuthentication = useMemo(() => status === 'checking', [status])
 
   const { 
     displayName, email, password, onInputChange, formState,
@@ -88,8 +91,17 @@ export const RegisterPage = () => {
               </Grid>
 
               <Grid container spacing={ 2 } sx={{ mb:2, mt:1 }}>
+                <Grid 
+                  item xs={12}
+                  display={ !!errorMessage ? '' : 'none' }
+                >
+                    <Alert severity="error">
+                      { errorMessage }
+                    </Alert>
+                </Grid>
                 <Grid item xs={12} >
                   <Button
+                    disabled={ isCheckingAuthentication }
                     type="submit"
                     variant="contained" 
                     fullWidth
